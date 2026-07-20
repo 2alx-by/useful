@@ -1,8 +1,10 @@
 import platform
 import random
+import subprocess
 from pathlib import Path
 
 import requests
+
 
 # ---------------- Configuration ----------------
 
@@ -11,8 +13,8 @@ SAVE_DIR.mkdir(parents=True, exist_ok=True)
 
 RESOLUTION = "1920x1080"
 QUERY = "nature mountains forest lake"
-CATEGORIES = "100"       # General only
-PURITY = "100"           # SFW only
+CATEGORIES = "100"
+PURITY = "100"
 SORTING = "random"
 
 # Optional:
@@ -23,14 +25,13 @@ API_KEY = None
 
 SYSTEM = platform.system()
 
-if SYSTEM == "Linux":
-    import wallpaper
-
 
 def set_wallpaper(filename):
     """
-    Set desktop wallpaper depending on operating system.
+    Set wallpaper on Windows 11 and Lubuntu 24.04.
     """
+
+    filename = str(filename)
 
     if SYSTEM == "Windows":
         import ctypes
@@ -42,16 +43,24 @@ def set_wallpaper(filename):
         ctypes.windll.user32.SystemParametersInfoW(
             SPI_SETDESKWALLPAPER,
             0,
-            str(filename),
+            filename,
             SPIF_UPDATEINIFILE | SPIF_SENDCHANGE,
         )
 
     elif SYSTEM == "Linux":
-        wallpaper.set(str(filename))
+        # Lubuntu LXQt
+        subprocess.run(
+            [
+                "pcmanfm-qt",
+                "--set-wallpaper",
+                filename,
+            ],
+            check=True,
+        )
 
     else:
         raise RuntimeError(
-            f"Unsupported operating system: {SYSTEM}"
+            f"Unsupported OS: {SYSTEM}"
         )
 
 
@@ -83,17 +92,17 @@ if not results:
     raise SystemExit("No wallpapers found.")
 
 
-wallpaper_info = random.choice(results)
+wallpaper = random.choice(results)
 
-url = wallpaper_info["path"]
+url = wallpaper["path"]
 filename = SAVE_DIR / Path(url).name
 
 print("Downloading:", url)
 
-img = requests.get(url, timeout=60)
-img.raise_for_status()
+image = requests.get(url, timeout=60)
+image.raise_for_status()
 
-filename.write_bytes(img.content)
+filename.write_bytes(image.content)
 
 print("Setting wallpaper:", filename)
 
