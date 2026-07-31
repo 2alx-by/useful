@@ -4,10 +4,10 @@ import fitz  # PyMuPDF
 
 # Change this to the directory you want to scan.
 # Windows example:
-ROOT = Path(r"d:\home\alx")
+#ROOT = Path(r"d:\home\alx")
 
 # Linux example:
-# ROOT = Path("/home/alex/SYNC")
+ROOT = Path("/home/alx/SYNC")
 
 SEARCH_WORD = "tosca"
 
