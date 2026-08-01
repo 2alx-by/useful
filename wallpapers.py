@@ -47,7 +47,7 @@ def set_wallpaper(filename):
             SPIF_UPDATEINIFILE | SPIF_SENDCHANGE,
         )
 
-    elif SYSTEM == "Linux":
+    elif SYSTEM == "Linux": #for Lubuntu/LXQT
         subprocess.run(
             [
                 "pcmanfm-qt",
