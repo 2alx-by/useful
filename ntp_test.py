@@ -4,7 +4,8 @@ import struct
 import time
 
 # NTP_SERVER = "pool.ntp.org"
-NTP_SERVER = "iotcore-ntp-v1.pre.eu.iotcore.liebherr.eu"
+NTP_SERVER = "iotcore-ntp-v1.pre.eu.iotcore.liebherr.com"
+# NTP_SERVER = "iotcore-ntp-v1.pre.eu.iotcore.liebherr.eu"
 NTP_PORT = 123
 NTP_PACKET_SIZE = 48
 
